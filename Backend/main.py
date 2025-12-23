@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from app.database.mongoConnection import connect_to_mongo, close_mongo_connection
+from app.database.mongoDb import connect_to_mongo, close_mongo_connection
+from app.api.routes.user import router as user_router
 
 app = FastAPI(title="Companion AI Backend")
 
@@ -11,6 +12,11 @@ def startup():
 def shutdown():
     close_mongo_connection()
 
+app.include_router(user_router)
+
 @app.get("/")
 def root():
     return {"message": "Companion AI API is running"}
+
+
+

@@ -28,3 +28,7 @@ def close_mongo_connection():
     if client:
         client.close()
         print("🔌 MongoDB disconnected")
+
+
+def get_user_collection():
+    return db["user"]

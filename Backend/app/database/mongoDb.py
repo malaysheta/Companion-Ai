@@ -32,3 +32,6 @@ def close_mongo_connection():
 
 def get_user_collection():
     return db["user"]
+
+def get_manual_collection():
+    return db["menuals"]

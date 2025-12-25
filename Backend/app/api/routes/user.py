@@ -11,9 +11,8 @@ from app.utils.oauth2 import get_current_user
 import os
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
+
 load_dotenv()
-
-
 
 router = APIRouter(tags=["User"])
 

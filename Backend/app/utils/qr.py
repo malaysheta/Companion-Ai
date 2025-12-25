@@ -4,6 +4,7 @@ import io
 from fastapi import HTTPException
 from cloudinary.uploader import upload
 from app.utils.cloudinary_config import cloudinary
+
 def generate_qr_code(company_name:str,product_name:str)-> io.BytesIO:
     try:
         data={

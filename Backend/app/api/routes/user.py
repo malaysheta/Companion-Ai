@@ -26,8 +26,14 @@ async def create_user(request : userSchema.CreateUser):
     if collection is None:
         raise ApiError(message="User collection not found",status_code=500,errors="Internal server error")
 
-    hashed_pass = Hash.bcrypt(request.password)
     email = request.email.strip().lower()
+
+    check_unique_email = collection.find_one({"email" : email})
+
+    if check_unique_email:
+        raise ApiError(message="Email is already rejistered",status_code=409,errors="Bad request")
+
+    hashed_pass = Hash.bcrypt(request.password)
     user_data = {
         "username" : request.username,
         "email" : email,
@@ -54,6 +60,7 @@ async def login(request: OAuth2PasswordRequestForm = Depends()):
     
     email = request.username.strip().lower()
     user = collection.find_one({"email" : email})
+
     print("user :" ,user)
 
     if not user:

@@ -23,7 +23,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 async def create_user(request : userSchema.CreateUser):
     collection = mongoDb.get_user_collection()
 
-    if not collection:
+    if collection is None:
         return ApiResponse.error(message="User collection not found",status_code=500,errors="Internal server error")
 
     hashed_pass = Hash.bcrypt(request.password)
@@ -37,7 +37,7 @@ async def create_user(request : userSchema.CreateUser):
 
     user = collection.insert_one(user_data)
 
-    if not user:
+    if user is None:
         return ApiResponse.error(message="User not created!",status_code=500,errors="Internal server error")
     
     return ApiResponse.success(message="User created successfully",data=str(user.inserted_id),status_code=201)
@@ -49,7 +49,7 @@ async def create_user(request : userSchema.CreateUser):
 async def login(request: OAuth2PasswordRequestForm = Depends()):
     collection = mongoDb.get_user_collection()
 
-    if not collection:
+    if collection is None:
         return ApiResponse.error(message="User collection not found",status_code=500,errors="Internal server error")
     
     email = request.username.strip().lower()

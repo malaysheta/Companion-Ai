@@ -14,7 +14,7 @@ async def api_error_handler(request: Request, exc: ApiError):
         content={
             "success": False,
             "message": exc.message,
-            "errors": exc.errors
+            "errors": "internal server errors"
         }
     )
 @app.on_event("startup")

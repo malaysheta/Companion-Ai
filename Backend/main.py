@@ -2,8 +2,8 @@ from fastapi import FastAPI,Request
 from app.database.mongoDb import connect_to_mongo, close_mongo_connection
 from fastapi.responses import JSONResponse
 from app.api.routes.user import router as user_router
-from app.api.routes.upload import router as menual_router
-from app.api.routes.manuals import router as menual_retrival_router
+from app.api.routes.upload import router as manual_router
+from app.api.routes.manuals import router as manual_retrival_router
 from app.core.responce import ApiError
 app = FastAPI(title="Companion AI Backend")
 
@@ -27,8 +27,8 @@ def shutdown():
 
 # routers
 app.include_router(user_router)
-app.include_router(menual_router)
-app.include_router(menual_retrival_router)
+app.include_router(manual_router)
+app.include_router(manual_retrival_router)
 
 @app.get("/")
 def root():

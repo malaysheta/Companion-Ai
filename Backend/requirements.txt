@@ -7,4 +7,12 @@ passlib[bcrypt]
 loguru
 python-jose
 cloudinary 
+qrcode[pil]
 python-multipart
+# Vector Pipeline Dependencies
+langchain
+langchain-nvidia-ai-endpoints
+langchain-community
+qdrant-client
+pypdf
+pydantic-settings

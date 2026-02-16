@@ -5,6 +5,8 @@ from app.api.routes.user import router as user_router
 from app.api.routes.upload import router as manual_router
 from app.api.routes.manuals import router as manual_retrival_router
 from app.core.responce import ApiError
+
+
 app = FastAPI(title="Companion AI Backend")
 
 @app.exception_handler(ApiError)
@@ -34,5 +36,10 @@ app.include_router(manual_retrival_router)
 def root():
     return {"message": "Companion AI API is running"}
 
+
+
+@app.get("/health")
+def abc():
+    return {"status": "healthy"}
 
 

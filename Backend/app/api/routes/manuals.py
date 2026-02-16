@@ -7,7 +7,7 @@ from app.utils.cloudinary_config import cloudinary
 # from cloudinary.api import resource
 
 router = APIRouter(tags=["manuals"])
-
+   
 
 @router.get('/users_manual')
 async def get_users_manual(curr_user:dict=Depends(get_current_user)):

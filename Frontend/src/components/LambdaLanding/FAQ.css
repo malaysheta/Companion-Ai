@@ -1,0 +1,219 @@
+.accordionItem {
+    interpolate-size: allow-keywords;
+    text-rendering: optimizelegibility;
+    overflow-wrap: break-word;
+    --osano-clear-dialog-background: rgba(11, 11, 11, 0);
+    --osano-button-border-color: #42413e;
+    --osano-dialog-type: box;
+    --osano-display-position: "bottom-right";
+    --osano-info-dialog-position: right;
+    --osano-widget-position: right;
+    --osano-opt-out-widget-position: left;
+    --osano-button-background-color: #0b0b0b;
+    --osano-button-foreground-color: #e7e6d9;
+    --osano-dialog-background-color: #000000;
+    --osano-dialog-foreground-color: #e7e6d9;
+    --osano-info-dialog-overlay-color: rgba(0, 0, 0, 0.45);
+    --osano-link-color: #815ef8;
+    --osano-toggle-off-track-color: #42413e;
+    --osano-toggle-off-thumb-color: #e7e6d9;
+    --osano-toggle-on-track-color: #6236f4;
+    --osano-toggle-on-thumb-color: #e7e6d9;
+    --osano-widget-color: #37cd8f;
+    --osano-widget-outline-color: #29246a;
+    --osano-widget-fill-color: #fff;
+    --osano-button-close-color: #e7e6d9;
+    --osano-button-accept-background-color: var(--osano-button-background-color);
+    --osano-button-accept-border-color: var(--osano-button-border-color, var(--osano-button-foreground-color));
+    --osano-button-accept-foreground-color: #e7e6d9;
+    --osano-button-deny-background-color: #e7e6d9;
+    --osano-button-deny-border-color: var(--osano-button-border-color, var(--osano-button-foreground-color));
+    --osano-button-deny-foreground-color: #0b0b0b;
+    --osano-button-manage-background-color: var(--osano-button-background-color);
+    --osano-button-manage-border-color: var(--osano-button-border-color, var(--osano-button-foreground-color));
+    --osano-button-manage-foreground-color: #e7e6d9;
+    --osano-info-dialog-link-color: #e7e6d9;
+    --osano-info-dialog-button-close-color: var(--osano-info-dialog-foreground-color, var(--osano-dialog-foreground-color));
+    --osano-info-dialog-toggle-off-track-color: var(--osano-toggle-off-track-color);
+    --osano-info-dialog-toggle-off-thumb-color: var(--osano-toggle-off-thumb-color);
+    --osano-info-dialog-toggle-on-track-color: var(--osano-toggle-on-track-color);
+    --osano-info-dialog-toggle-on-thumb-color: var(--osano-toggle-on-thumb-color);
+    --osano-info-dialog-button-background-color: #e7e6d9;
+    --osano-info-dialog-button-border-color: #e7e6d9;
+    --osano-info-dialog-button-foreground-color: #0b0b0b;
+    --osano-info-dialog-background-color: #0b0b0b;
+    --osano-info-dialog-foreground-color: #e7e6d9;
+    --osano-button-deny-background-color-hover: #b0afa6;
+    --osano-info-dialog-button-background-color-hover: #b0afa6;
+    --osano-toggle-off-background-color: #d2cfff;
+    --osano-toggle-button-off-color: #ffffff;
+    --osano-toggle-on-background-color: #37cd8f;
+    --osano-toggle-button-on-color: #f4f4f4;
+    --osano-button-background-color-contrast: #1f1f1f;
+    --osano-button-foreground-color-contrast: #d3d2c5;
+    --osano-button-accept-foreground-color-contrast: #d3d2c5;
+    --osano-button-deny-background-color-contrast: #d3d2c5;
+    --osano-button-deny-foreground-color-contrast: #1f1f1f;
+    --osano-button-manage-foreground-color-contrast: #d3d2c5;
+    --osano-dialog-background-color-contrast: #141414;
+    --osano-dialog-foreground-color-contrast: #d3d2c5;
+    --osano-link-color-contrast: #9572ff;
+    --osano-toggle-off-track-color-contrast: #565552;
+    --osano-toggle-off-track-color-disabled: #82817e;
+    --osano-toggle-off-thumb-color-contrast: #d3d2c5;
+    --osano-toggle-off-thumb-color-disabled: #a7a699;
+    --osano-toggle-on-track-color-contrast: #764aff;
+    --osano-toggle-on-track-color-disabled: #a276ff;
+    --osano-toggle-on-thumb-color-contrast: #d3d2c5;
+    --osano-toggle-on-thumb-color-disabled: #a7a699;
+    --osano-info-dialog-button-background-color-contrast: #d3d2c5;
+    --osano-info-dialog-button-foreground-color-contrast: #1f1f1f;
+    --osano-info-dialog-link-color-contrast: #d3d2c5;
+    --osano-button-background-color-hover: var(--osano-button-background-color-contrast, #1f1f1f);
+    --osano-button-foreground-color-hover: var(--osano-button-foreground-color-contrast, #d3d2c5);
+    --osano-button-background-color-focus: var(--osano-button-foreground-color-hover, var(--osano-button-foreground-color-contrast));
+    --osano-button-foreground-color-focus: var(--osano-button-background-color-hover, var(--osano-button-background-color-contrast));
+    --osano-toggle-off-track-color-hover: var(--osano-toggle-off-track-color-contrast, #565552);
+    --osano-toggle-off-thumb-color-hover: var(--osano-toggle-off-thumb-color-contrast, #d3d2c5);
+    --osano-toggle-off-track-color-focus: var(--osano-toggle-off-thumb-color-hover, var(--osano-toggle-off-thumb-color-contrast));
+    --osano-toggle-off-thumb-color-focus: var(--osano-toggle-off-track-color-hover, var(--osano-toggle-off-track-color-contrast));
+    --osano-toggle-on-track-color-hover: var(--osano-toggle-on-track-color-contrast, #764aff);
+    --osano-toggle-on-thumb-color-hover: var(--osano-toggle-on-thumb-color-contrast, #d3d2c5);
+    --osano-toggle-on-track-color-focus: var(--osano-toggle-on-thumb-color-hover, var(--osano-toggle-on-thumb-color-contrast));
+    --osano-toggle-on-thumb-color-focus: var(--osano-toggle-on-track-color-hover, var(--osano-toggle-on-track-color-contrast));
+    --osano-button-accept-background-color-contrast: var(--osano-button-background-color-contrast, #1f1f1f);
+    --osano-button-accept-background-color-hover: var(--osano-button-background-color-hover, var(--osano-button-background-color-contrast));
+    --osano-button-accept-foreground-color-hover: var(--osano-button-accept-foreground-color-contrast, #d3d2c5);
+    --osano-button-accept-background-color-focus: var(--osano-button-accept-foreground-color-hover, var(--osano-button-accept-foreground-color-contrast));
+    --osano-button-accept-foreground-color-focus: var(--osano-button-accept-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-button-deny-foreground-color-hover: var(--osano-button-deny-foreground-color-contrast, #1f1f1f);
+    --osano-button-deny-background-color-focus: var(--osano-button-deny-foreground-color-hover, var(--osano-button-deny-foreground-color-contrast));
+    --osano-button-deny-foreground-color-focus: var(--osano-button-deny-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-button-manage-background-color-contrast: var(--osano-button-background-color-contrast, #1f1f1f);
+    --osano-button-manage-background-color-hover: var(--osano-button-background-color-hover, var(--osano-button-background-color-contrast));
+    --osano-button-manage-foreground-color-hover: var(--osano-button-manage-foreground-color-contrast, #d3d2c5);
+    --osano-button-manage-background-color-focus: var(--osano-button-manage-foreground-color-hover, var(--osano-button-manage-foreground-color-contrast));
+    --osano-button-manage-foreground-color-focus: var(--osano-button-manage-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-info-dialog-button-foreground-color-hover: var(--osano-info-dialog-button-foreground-color-contrast, #1f1f1f);
+    --osano-info-dialog-button-background-color-focus: var(--osano-info-dialog-button-foreground-color-hover, var(--osano-info-dialog-button-foreground-color-contrast));
+    --osano-info-dialog-button-foreground-color-focus: var(--osano-info-dialog-button-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-info-dialog-toggle-off-track-color-contrast: var(--osano-toggle-off-track-color-contrast, #565552);
+    --osano-info-dialog-toggle-off-thumb-color-contrast: var(--osano-toggle-off-thumb-color-contrast, #d3d2c5);
+    --osano-info-dialog-toggle-off-track-color-hover: var(--osano-info-dialog-toggle-off-track-color-contrast, var(--osano-toggle-off-track-color-contrast));
+    --osano-info-dialog-toggle-off-thumb-color-hover: var(--osano-info-dialog-toggle-off-thumb-color-contrast, var(--osano-toggle-off-thumb-color-contrast));
+    --osano-info-dialog-toggle-off-track-color-focus: var(--osano-info-dialog-toggle-off-thumb-color-hover, var(--osano-info-dialog-toggle-off-thumb-color-contrast));
+    --osano-info-dialog-toggle-off-thumb-color-focus: var(--osano-info-dialog-toggle-off-track-color-hover, var(--osano-info-dialog-toggle-off-track-color-contrast));
+    --osano-info-dialog-toggle-off-track-color-disabled: var(--osano-toggle-off-track-color-disabled, #82817e);
+    --osano-info-dialog-toggle-off-thumb-color-disabled: var(--osano-toggle-off-thumb-color-disabled, #a7a699);
+    --osano-info-dialog-toggle-on-track-color-contrast: var(--osano-toggle-on-track-color-contrast, #764aff);
+    --osano-info-dialog-toggle-on-thumb-color-contrast: var(--osano-toggle-on-thumb-color-contrast, #d3d2c5);
+    --osano-info-dialog-toggle-on-track-color-hover: var(--osano-info-dialog-toggle-on-track-color-contrast, var(--osano-toggle-on-track-color-contrast));
+    --osano-info-dialog-toggle-on-thumb-color-hover: var(--osano-info-dialog-toggle-on-thumb-color-contrast, var(--osano-toggle-on-thumb-color-contrast));
+    --osano-info-dialog-toggle-on-track-color-focus: var(--osano-info-dialog-toggle-on-thumb-color-hover, var(--osano-info-dialog-toggle-on-thumb-color-contrast));
+    --osano-info-dialog-toggle-on-thumb-color-focus: var(--osano-info-dialog-toggle-on-track-color-hover, var(--osano-info-dialog-toggle-on-track-color-contrast));
+    --osano-info-dialog-toggle-on-track-color-disabled: var(--osano-toggle-on-track-color-disabled, #a276ff);
+    --osano-info-dialog-toggle-on-thumb-color-disabled: var(--osano-toggle-on-thumb-color-disabled, #a7a699);
+
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--leading-relaxed);
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-text-secondary);
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFSklEQVR4AbxXaUxUVxQ+PHCBmICKhcQo1bYWIak2takKIU2DoGiDggQIIrGpQAmIgUrB1JA08Qf+cIkBibEsFgh7ICyFYgKEVRAmYS1ryk5Zwr7J1u8wmWEG5s1UA06+M/ee8+4993t3Ofc8gaS/b6ysrIpv3749ePHixRKYnCEfBEzA2MHBIS8zM9Pq0aNHRtnZ2Za5ubmJxsbGDz4EAybg4uHhYaCvry8f78KFC/Ts2bM7MDhAthXCgQMHTPbv30+rq6tKA12+fJkcHR3DYNSBbBuE0dHRf6empohl4yi3bt36FLbvIdsGYWVlJauoqIgGBgY2DYKNSRYWFt6bHmyhQYCvxvT09BwmoGoWXFxcrNHmCGRbwASora0tIDExcaG9vZ0wI0oDXbt2TcAe8VQybqGyRgD+WuPi4u43NzdTX18f1HUYGBiQk5PTD7DshGw5ZARodnb2QURExN+9vb20sLCgNJC7u/tHMNhDthxyAvC8UFZW5ldQUEBdXV1Q13H27FmytLT0WrdsXU2RAHt9FRsbm8GzMDc3x7pcnJ2dv4PyCcT02LFjMQhetadPn86C/i3kvbGRAHV2dt5JTU19yyQUvSJca+np6YV7enrW1NfXe8TExHyZn59/KTAw8BXa/XT8+PGXICUxNzdPgP455H9hEwH0ageB5x0dHbS4uAhVCpwE8vX1tb13757ezp3S/bhnzx66cuWKtpubW0RhYaE7SJ2USCSuaPcavb6AaIQqAjQ8PHw/KSlpBqXcAQ9qZGREmAW5TRAE2rt3L5mampKuru6afceOHfT48WN9W1vbP2DQGMZVEkDHQdyOTxEfUJVCS0uLeMCNe+Po0aN06NAhamxsJNlPW1ubQkNDeQacZDaxUowAjY2NPYyOjp5TPJKIB1RRUaHka/fu3YQlII4Xig/OnDlD1tbWPoo2VXVRAmg8jNzgRU9PD6pSHDx4kK5evSpVFP51dHQIm1DBIq3a2dlZoMYxBIVqqCNAuCkfxsfHL6nuqtmK+KGFVl9DRKGWAHr9k5KSkrm8vIzqu4M3LXoZQkShiQBvrvC8vDxRB+oeTE9P82PliMYWBdFIAG1f19XVoXh3VFZWcqc3/CcmmghoI9gEnTt3Tqy/qJ1TvOTk5Co06ISIQpHAV4h2YTY2NjmI+6U3btyQICUbQoQLPXXqlKgDsQeRkZHLuNh+FnsuszMB7cOHDz9HGH2DXCAI8d0OyYlFVFTUySdPnuxTNThvSsSJTde2zCki4VJAQADHAP7GkJlVlgJCqH9GRsZNXCS0a9cueaOlpSUaHx+noaEhGhwcpP7+fuKY0NLSQtXV1dTU1ES1tbU0OTkp7yOrIFj1zs/Px8h0daWA9XU7ceKEvA0SE+JBqqqq+ARwuka8CXnA7u5uGhkZIZ4BiUSylknzpcXrLXeACsLwx3gxP1Q1QoAzXXbGcR/XLHGdB5mYmCAsw/z169cTcbEEgugvrq6uvwcHBxd4e3un+/n5edy9e7eeZ4lFcSQzMzPy8vL6FbZ9ELUQiouLE/hteap5OjkzTkhIWMSShIPAEeQHrvDwEPIAS/BjaWmpTUNDgyP0lzU1NY5paWlveXmgKyEkJMTA0NAwWMmoQhEQLO77+Pjc9Pf3zwkKCvoLX0O/ITf8DFexL9oPQtShDafkT54BhG2ldvji4vvBXMmoQuFTwN9kL/A2l8rLy22xB0LRTjkphEEM2BvpnE23trauZdQzMzOEk0T29vYtJSUlIWL9ZHYmIKu/bxmPLCk8LCysHfulwsTE5On58+dtsrKyzOCwDqIW/wEAAP///mZ5OwAAAAZJREFUAwCHViakvLhTOwAAAABJRU5ErkJggg==") 3 0, auto !important;
+    margin: 0px;
+    box-sizing: inherit;
+    column-gap: 24px;
+    display: flex;
+    flex-direction: row;
+    padding: 35px 0px;
+    width: 100%;
+}
+
+
+
+.accordionItemNumberColumn {
+    flex: 0 0 auto;
+}
+
+.accordionItemNumberColumn h5 {
+    color: var(--color-lambda-beige, #e7e6d9);
+    font-family: var(--font-mono);
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.accordionItemContentColumn {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.accordionItemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+    width: 100%;
+}
+
+.accordionItemHeader h5 {
+    font-family: var(--font-sans);
+    font-size: var(--text-2xl, 2rem);
+    font-weight: var(--font-weight-light, 300);
+    color: white;
+    margin: 0;
+    margin-right: auto;
+    line-height: var(--leading-tight);
+    transition: color 0.3s ease;
+    flex: 1;
+    min-width: 0;
+}
+
+.accordionItemHeader:hover h5 {
+    color: var(--color-lambda-purple, #6236f4);
+}
+
+.accordionToggle {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    color: var(--color-text-secondary);
+    user-select: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.accordionItemContent {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 0;
+}
+
+.accordionItemContentOpen {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 20px;
+}
+
+.accordionItemRich {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.accordionItemRich p {
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+}

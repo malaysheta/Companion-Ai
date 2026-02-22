@@ -1,0 +1,470 @@
+:root {
+    interpolate-size: allow-keywords;
+    text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
+    --osano-clear-dialog-background: rgba(11, 11, 11, 0);
+    --osano-button-border-color: #42413e;
+    --osano-dialog-type: box;
+    --osano-display-position: "bottom-right";
+    --osano-info-dialog-position: right;
+    --osano-widget-position: right;
+    --osano-opt-out-widget-position: left;
+    --osano-button-background-color: #0b0b0b;
+    --osano-button-foreground-color: #e7e6d9;
+    --osano-dialog-background-color: #000000;
+    --osano-dialog-foreground-color: #e7e6d9;
+    --osano-info-dialog-overlay-color: rgba(0, 0, 0, 0.45);
+    --osano-link-color: #815ef8;
+    --osano-toggle-off-track-color: #42413e;
+    --osano-toggle-off-thumb-color: #e7e6d9;
+    --osano-toggle-on-track-color: #6236f4;
+    --osano-toggle-on-thumb-color: #e7e6d9;
+    --osano-widget-color: #37cd8f;
+    --osano-widget-outline-color: #29246a;
+    --osano-widget-fill-color: #fff;
+    --osano-button-close-color: #e7e6d9;
+    --osano-button-accept-background-color: var(--osano-button-background-color);
+    --osano-button-accept-border-color: var(--osano-button-border-color, var(--osano-button-foreground-color));
+    --osano-button-accept-foreground-color: #e7e6d9;
+    --osano-button-deny-background-color: #e7e6d9;
+    --osano-button-deny-border-color: var(--osano-button-border-color, var(--osano-button-foreground-color));
+    --osano-button-deny-foreground-color: #0b0b0b;
+    --osano-button-manage-background-color: var(--osano-button-background-color);
+    --osano-button-manage-border-color: var(--osano-button-border-color, var(--osano-button-foreground-color));
+    --osano-button-manage-foreground-color: #e7e6d9;
+    --osano-info-dialog-link-color: #e7e6d9;
+    --osano-info-dialog-button-close-color: var(--osano-info-dialog-foreground-color, var(--osano-dialog-foreground-color));
+    --osano-info-dialog-toggle-off-track-color: var(--osano-toggle-off-track-color);
+    --osano-info-dialog-toggle-off-thumb-color: var(--osano-toggle-off-thumb-color);
+    --osano-info-dialog-toggle-on-track-color: var(--osano-toggle-on-track-color);
+    --osano-info-dialog-toggle-on-thumb-color: var(--osano-toggle-on-thumb-color);
+    --osano-info-dialog-button-background-color: #e7e6d9;
+    --osano-info-dialog-button-border-color: #e7e6d9;
+    --osano-info-dialog-button-foreground-color: #0b0b0b;
+    --osano-info-dialog-background-color: #0b0b0b;
+    --osano-info-dialog-foreground-color: #e7e6d9;
+    --osano-button-deny-background-color-hover: #b0afa6;
+    --osano-info-dialog-button-background-color-hover: #b0afa6;
+    --osano-toggle-off-background-color: #d2cfff;
+    --osano-toggle-button-off-color: #ffffff;
+    --osano-toggle-on-background-color: #37cd8f;
+    --osano-toggle-button-on-color: #f4f4f4;
+    --osano-button-background-color-contrast: #1f1f1f;
+    --osano-button-foreground-color-contrast: #d3d2c5;
+    --osano-button-accept-foreground-color-contrast: #d3d2c5;
+    --osano-button-deny-background-color-contrast: #d3d2c5;
+    --osano-button-deny-foreground-color-contrast: #1f1f1f;
+    --osano-button-manage-foreground-color-contrast: #d3d2c5;
+    --osano-dialog-background-color-contrast: #141414;
+    --osano-dialog-foreground-color-contrast: #d3d2c5;
+    --osano-link-color-contrast: #9572ff;
+    --osano-toggle-off-track-color-contrast: #565552;
+    --osano-toggle-off-track-color-disabled: #82817e;
+    --osano-toggle-off-thumb-color-contrast: #d3d2c5;
+    --osano-toggle-off-thumb-color-disabled: #a7a699;
+    --osano-toggle-on-track-color-contrast: #764aff;
+    --osano-toggle-on-track-color-disabled: #a276ff;
+    --osano-toggle-on-thumb-color-contrast: #d3d2c5;
+    --osano-toggle-on-thumb-color-disabled: #a7a699;
+    --osano-info-dialog-button-background-color-contrast: #d3d2c5;
+    --osano-info-dialog-button-foreground-color-contrast: #1f1f1f;
+    --osano-info-dialog-link-color-contrast: #d3d2c5;
+    --osano-button-background-color-hover: var(--osano-button-background-color-contrast, #1f1f1f);
+    --osano-button-foreground-color-hover: var(--osano-button-foreground-color-contrast, #d3d2c5);
+    --osano-button-background-color-focus: var(--osano-button-foreground-color-hover, var(--osano-button-foreground-color-contrast));
+    --osano-button-foreground-color-focus: var(--osano-button-background-color-hover, var(--osano-button-background-color-contrast));
+    --osano-toggle-off-track-color-hover: var(--osano-toggle-off-track-color-contrast, #565552);
+    --osano-toggle-off-thumb-color-hover: var(--osano-toggle-off-thumb-color-contrast, #d3d2c5);
+    --osano-toggle-off-track-color-focus: var(--osano-toggle-off-thumb-color-hover, var(--osano-toggle-off-thumb-color-contrast));
+    --osano-toggle-off-thumb-color-focus: var(--osano-toggle-off-track-color-hover, var(--osano-toggle-off-track-color-contrast));
+    --osano-toggle-on-track-color-hover: var(--osano-toggle-on-track-color-contrast, #764aff);
+    --osano-toggle-on-thumb-color-hover: var(--osano-toggle-on-thumb-color-contrast, #d3d2c5);
+    --osano-toggle-on-track-color-focus: var(--osano-toggle-on-thumb-color-hover, var(--osano-toggle-on-thumb-color-contrast));
+    --osano-toggle-on-thumb-color-focus: var(--osano-toggle-on-track-color-hover, var(--osano-toggle-on-track-color-contrast));
+    --osano-button-accept-background-color-contrast: var(--osano-button-background-color-contrast, #1f1f1f);
+    --osano-button-accept-background-color-hover: var(--osano-button-background-color-hover, var(--osano-button-background-color-contrast));
+    --osano-button-accept-foreground-color-hover: var(--osano-button-accept-foreground-color-contrast, #d3d2c5);
+    --osano-button-accept-background-color-focus: var(--osano-button-accept-foreground-color-hover, var(--osano-button-accept-foreground-color-contrast));
+    --osano-button-accept-foreground-color-focus: var(--osano-button-accept-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-button-deny-foreground-color-hover: var(--osano-button-deny-foreground-color-contrast, #1f1f1f);
+    --osano-button-deny-background-color-focus: var(--osano-button-deny-foreground-color-hover, var(--osano-button-deny-foreground-color-contrast));
+    --osano-button-deny-foreground-color-focus: var(--osano-button-deny-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-button-manage-background-color-contrast: var(--osano-button-background-color-contrast, #1f1f1f);
+    --osano-button-manage-background-color-hover: var(--osano-button-background-color-hover, var(--osano-button-background-color-contrast));
+    --osano-button-manage-foreground-color-hover: var(--osano-button-manage-foreground-color-contrast, #d3d2c5);
+    --osano-button-manage-background-color-focus: var(--osano-button-manage-foreground-color-hover, var(--osano-button-manage-foreground-color-contrast));
+    --osano-button-manage-foreground-color-focus: var(--osano-button-manage-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-info-dialog-button-foreground-color-hover: var(--osano-info-dialog-button-foreground-color-contrast, #1f1f1f);
+    --osano-info-dialog-button-background-color-focus: var(--osano-info-dialog-button-foreground-color-hover, var(--osano-info-dialog-button-foreground-color-contrast));
+    --osano-info-dialog-button-foreground-color-focus: var(--osano-info-dialog-button-background-color-hover, var(--osano-button-background-color-hover));
+    --osano-info-dialog-toggle-off-track-color-contrast: var(--osano-toggle-off-track-color-contrast, #565552);
+    --osano-info-dialog-toggle-off-thumb-color-contrast: var(--osano-toggle-off-thumb-color-contrast, #d3d2c5);
+    --osano-info-dialog-toggle-off-track-color-hover: var(--osano-info-dialog-toggle-off-track-color-contrast, var(--osano-toggle-off-track-color-contrast));
+    --osano-info-dialog-toggle-off-thumb-color-hover: var(--osano-info-dialog-toggle-off-thumb-color-contrast, var(--osano-toggle-off-thumb-color-contrast));
+    --osano-info-dialog-toggle-off-track-color-focus: var(--osano-info-dialog-toggle-off-thumb-color-hover, var(--osano-info-dialog-toggle-off-thumb-color-contrast));
+    --osano-info-dialog-toggle-off-thumb-color-focus: var(--osano-info-dialog-toggle-off-track-color-hover, var(--osano-info-dialog-toggle-off-track-color-contrast));
+    --osano-info-dialog-toggle-off-track-color-disabled: var(--osano-toggle-off-track-color-disabled, #82817e);
+    --osano-info-dialog-toggle-off-thumb-color-disabled: var(--osano-toggle-off-thumb-color-disabled, #a7a699);
+    --osano-info-dialog-toggle-on-track-color-contrast: var(--osano-toggle-on-track-color-contrast, #764aff);
+    --osano-info-dialog-toggle-on-thumb-color-contrast: var(--osano-toggle-on-thumb-color-contrast, #d3d2c5);
+    --osano-info-dialog-toggle-on-track-color-hover: var(--osano-info-dialog-toggle-on-track-color-contrast, var(--osano-toggle-on-track-color-contrast));
+    --osano-info-dialog-toggle-on-thumb-color-hover: var(--osano-info-dialog-toggle-on-thumb-color-contrast, var(--osano-toggle-on-thumb-color-contrast));
+    --osano-info-dialog-toggle-on-track-color-focus: var(--osano-info-dialog-toggle-on-thumb-color-hover, var(--osano-info-dialog-toggle-on-thumb-color-contrast));
+    --osano-info-dialog-toggle-on-thumb-color-focus: var(--osano-info-dialog-toggle-on-track-color-hover, var(--osano-info-dialog-toggle-on-track-color-contrast));
+    --osano-info-dialog-toggle-on-track-color-disabled: var(--osano-toggle-on-track-color-disabled, #a276ff);
+    --osano-info-dialog-toggle-on-thumb-color-disabled: var(--osano-toggle-on-thumb-color-disabled, #a7a699);
+    --color-terminal-475: #252525;
+    --color-terminal-500: #0b0b0b;
+    --color-terminal-1000: #000000;
+    --color-terminal-475-faded: rgba(37, 37, 37, .6);
+    --color-shell-500: #e7e6d9;
+    --color-shell-600: #b9b8ae;
+    --color-shell-600-light: rgba(185, 184, 174, .2);
+    --color-shell-700: #8b8a8a;
+    --color-shell-800: #5c5c57;
+    --color-violet-500: #6236f4;
+    --color-violet-500-light: #a17ff7;
+    --color-code: #99f599;
+    --color-red-400: #ec3333;
+    --color-primary: var(--color-terminal-500);
+    --color-primary-light: var(--color-terminal-450);
+    --color-primary-dark: var(--color-terminal-1000);
+    --color-brand: var(--color-violet-500);
+    --color-background: var(--color-terminal-500);
+    --color-background-gray: var(--color-terminal-475);
+    --color-background-light: var(--color-shell-500);
+    --color-background-brand: var(--color-violet-500);
+    --color-background-black: var(--color-terminal-1000);
+    --color-text-primary: var(--color-shell-500);
+    --color-text-primary-dark: var(--color-terminal-500);
+    --color-text-secondary: var(--color-shell-600);
+    --color-text-secondary-dark: var(--color-terminal-500);
+    --color-button-primary-text: var(--color-terminal-500);
+    --color-button-primary-background: var(--color-shell-500);
+    --color-button-secondary-text: var(--color-shell-500);
+    --color-button-secondary-background: var(--color-violet-500);
+    --color-button-secondary-background-hover: var(--color-violet-500-light);
+    --color-button-tertiary-text: var(--color-shell-500);
+    --color-button-tertiary-background: transparent;
+    --color-text-link: var(--color-violet-500-light);
+    --color-text-link-hover: var(--color-violet-500);
+    --color-form-text: var(--color-shell-500);
+    --color-form-label: var(--color-shell-800);
+    --color-form-border: var(--color-shell-500);
+    --color-select-color: var(--color-shell-500);
+    --color-section-label: var(--color-terminal-475);
+    --font-mono: "Suisse Intl Mono", "Courier New", monospace;
+    --font-sans: "Suisse Intl", Helvetica, Arial, sans-serif;
+    --font-pixel: "apkarchivr21", monospace;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --text-xs: .75rem;
+    --text-sm: .875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2.15rem;
+    --text-3xl: 3rem;
+    --text-4xl: 3.75rem;
+    --text-5xl: 4.5rem;
+    --text-6xl: 6rem;
+    --text-7xl: 7.315rem;
+    --leading-none: 100%;
+    --leading-tight: 110%;
+    --leading-snug: 120%;
+    --leading-normal: 130%;
+    --leading-relaxed: 150%;
+    --leading-loose: 160%;
+    --tracking-tighter: -.02em;
+    --tracking-tight: -.01em;
+    --tracking-normal: 0;
+    --tracking-wide: .01em;
+    --tracking-wider: .02em;
+    --tracking-widest: .05em;
+    --space-0: 0;
+    --space-4xs: 5px;
+    --space-3xs: 10px;
+    --space-2xs: 20px;
+    --space-xs: 40px;
+    --space-regular: 48px;
+    --space-sm: 60px;
+    --space-md: 80px;
+    --space-lg: 100px;
+    --space-xl: 160px;
+    --space-2xl: 240px;
+    --box-shadow-rgb: 0 .99px 0 0 #ff0, .99px 0 0 0 #0ff, 1.98px .99px 0 0 #0f0, 0 -.99px 0 0 #00f, -.99px 0 0 0 #f0f, -1.98px 0 0 0 #f00;
+    --text-shadow-rgb: 0 .99px 0 #ff0, .99px 0 0 #0ff, 1.98px .99px 0 #0f0, 0 -.99px 0 #00f, -.99px 0 0 #f0f, -1.98px 0 0 #f00;
+    --transition-snappy: .1s cubic-bezier(.6, 0, .4, 1);
+    --transition-smooth: .4s cubic-bezier(.6, 0, .4, 1);
+    --easing-snappy: cubic-bezier(.6, 0, .4, 1);
+    --easing-smooth: cubic-bezier(.6, 0, .4, 1);
+    -webkit-font-smoothing: antialiased;
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFSklEQVR4AbxXaUxUVxQ+PHCBmICKhcQo1bYWIak2takKIU2DoGiDggQIIrGpQAmIgUrB1JA08Qf+cIkBibEsFgh7ICyFYgKEVRAmYS1ryk5Zwr7J1u8wmWEG5s1UA06+M/ee8+4993t3Ofc8gaS/b6ysrIpv3749ePHixRKYnCEfBEzA2MHBIS8zM9Pq0aNHRtnZ2Za5ubmJxsbGDz4EAybg4uHhYaCvry8f78KFC/Ts2bM7MDhAthXCgQMHTPbv30+rq6tKA12+fJkcHR3DYNSBbBuE0dHRf6empohl4yi3bt36FLbvIdsGYWVlJauoqIgGBgY2DYKNSRYWFt6bHmyhQYCvxvT09BwmoGoWXFxcrNHmCGRbwASora0tIDExcaG9vZ0wI0oDXbt2TcAe8VQybqGyRgD+WuPi4u43NzdTX18f1HUYGBiQk5PTD7DshGw5ZARodnb2QURExN+9vb20sLCgNJC7u/tHMNhDthxyAvC8UFZW5ldQUEBdXV1Q13H27FmytLT0WrdsXU2RAHt9FRsbm8GzMDc3x7pcnJ2dv4PyCcT02LFjMQhetadPn86C/i3kvbGRAHV2dt5JTU19yyQUvSJca+np6YV7enrW1NfXe8TExHyZn59/KTAw8BXa/XT8+PGXICUxNzdPgP455H9hEwH0ageB5x0dHbS4uAhVCpwE8vX1tb13757ezp3S/bhnzx66cuWKtpubW0RhYaE7SJ2USCSuaPcavb6AaIQqAjQ8PHw/KSlpBqXcAQ9qZGREmAW5TRAE2rt3L5mampKuru6afceOHfT48WN9W1vbP2DQGMZVEkDHQdyOTxEfUJVCS0uLeMCNe+Po0aN06NAhamxsJNlPW1ubQkNDeQacZDaxUowAjY2NPYyOjp5TPJKIB1RRUaHka/fu3YQlII4Xig/OnDlD1tbWPoo2VXVRAmg8jNzgRU9PD6pSHDx4kK5evSpVFP51dHQIm1DBIq3a2dlZoMYxBIVqqCNAuCkfxsfHL6nuqtmK+KGFVl9DRKGWAHr9k5KSkrm8vIzqu4M3LXoZQkShiQBvrvC8vDxRB+oeTE9P82PliMYWBdFIAG1f19XVoXh3VFZWcqc3/CcmmghoI9gEnTt3Tqy/qJ1TvOTk5Co06ISIQpHAV4h2YTY2NjmI+6U3btyQICUbQoQLPXXqlKgDsQeRkZHLuNh+FnsuszMB7cOHDz9HGH2DXCAI8d0OyYlFVFTUySdPnuxTNThvSsSJTde2zCki4VJAQADHAP7GkJlVlgJCqH9GRsZNXCS0a9cueaOlpSUaHx+noaEhGhwcpP7+fuKY0NLSQtXV1dTU1ES1tbU0OTkp7yOrIFj1zs/Px8h0daWA9XU7ceKEvA0SE+JBqqqq+ARwuka8CXnA7u5uGhkZIZ4BiUSylknzpcXrLXeACsLwx3gxP1Q1QoAzXXbGcR/XLHGdB5mYmCAsw/z169cTcbEEgugvrq6uvwcHBxd4e3un+/n5edy9e7eeZ4lFcSQzMzPy8vL6FbZ9ELUQiouLE/hteap5OjkzTkhIWMSShIPAEeQHrvDwEPIAS/BjaWmpTUNDgyP0lzU1NY5paWlveXmgKyEkJMTA0NAwWMmoQhEQLO77+Pjc9Pf3zwkKCvoLX0O/ITf8DFexL9oPQtShDafkT54BhG2ldvji4vvBXMmoQuFTwN9kL/A2l8rLy22xB0LRTjkphEEM2BvpnE23trauZdQzMzOEk0T29vYtJSUlIWL9ZHYmIKu/bxmPLCk8LCysHfulwsTE5On58+dtsrKyzOCwDqIW/wEAAP///mZ5OwAAAAZJREFUAwCHViakvLhTOwAAAABJRU5ErkJggg==") 3 0, auto !important;
+    --notification-banner-height: 62px;
+    --header-nav-height: 100px;
+    --total-header-height: var(--header-nav-height);
+}
+
+.headerContentWrapper {
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-nav-height);
+    width: 100%;
+    padding: 0 40px;
+    background: transparent;
+    border-bottom: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.headerLogoWrapper {
+    display: flex;
+    align-items: center;
+    border-right: none;
+    height: 100%;
+    padding-right: 40px;
+}
+
+.headerLogo {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.headerLogo svg {
+    height: 40px;
+    width: auto;
+    fill: currentColor;
+}
+
+.mainNav {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.mainNav>ul,
+.utilityNav>ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    /* Remove gap, use padding on LIs for separators if needed, or just keep gap if no separators in between main nav items */
+    height: 100%;
+    align-items: center;
+}
+
+.mainNav>ul {
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+}
+
+.mainNav li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.utilityNav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.utilityNav>ul {
+    gap: 0;
+}
+
+.utilityNav li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Log In Link on Left */
+.headerLogo {
+    display: flex;
+    align-items: center;
+    color: var(--color-shell-500);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+
+.headerLogo:hover {
+    color: #fff;
+}
+
+.centerText {
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1.5em;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    white-space: nowrap;
+    padding-left: 1.5em;
+}
+
+/* Get Started Button */
+/* Get Started Button container - hidden/transparent now */
+.utilityNav li:last-child {
+    background-color: transparent;
+    color: #fff;
+    padding: 0 40px;
+    margin-left: 0;
+    position: relative;
+    box-shadow: none;
+    height: 100%;
+    border-left: none;
+}
+
+.mainNav a:hover,
+.utilityNav a:hover,
+.noLink:hover {
+    color: #fff;
+}
+
+/* Dropdown Logic */
+.hasDropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdownWrapper {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    background: var(--color-terminal-500);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    min-width: 250px;
+    z-index: 101;
+    cursor: default;
+}
+
+.hasDropdown:hover .dropdownWrapper {
+    display: block;
+}
+
+.dropdownContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dropdownColumns {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 40px;
+}
+
+.dropdownColumnHeading {
+    font-family: var(--font-mono);
+    color: var(--color-shell-800);
+    /* Darker gray */
+    margin-bottom: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dropdownLinks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dropdownLinks a {
+    text-transform: none;
+    /* Usually dropdown links might not be all caps, but checking styling */
+    color: var(--color-shell-500);
+    font-family: var(--font-sans);
+    /* Often sans for content */
+    font-size: 16px;
+}
+
+.dropdownLinks a:hover {
+    color: var(--color-violet-500);
+}
+
+.mobileMenuToggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-shell-500);
+}
+
+@media (max-width: 1024px) {
+
+    .mainNav,
+    .utilityNav {
+        display: none;
+    }
+
+    .mobileMenuToggle {
+        display: flex;
+    }
+
+    .headerContentWrapper {
+        padding: 0 20px;
+    }
+}
+
+body {
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-secondary);
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFSklEQVR4AbxXaUxUVxQ+PHCBmICKhcQo1bYWIak2takKIU2DoGiDggQIIrGpQAmIgUrB1JA08Qf+cIkBibEsFgh7ICyFYgKEVRAmYS1ryk5Zwr7J1u8wmWEG5s1UA06+M/ee8+4993t3Ofc8gaS/b6ysrIpv3749ePHixRKYnCEfBEzA2MHBIS8zM9Pq0aNHRtnZ2Za5ubmJxsbGDz4EAybg4uHhYaCvry8f78KFC/Ts2bM7MDhAthXCgQMHTPbv30+rq6tKA12+fJkcHR3DYNSBbBuE0dHRf6empohl4yi3bt36FLbvIdsGYWVlJauoqIgGBgY2DYKNSRYWFt6bHmyhQYCvxvT09BwmoGoWXFxcrNHmCGRbwASora0tIDExcaG9vZ0wI0oDXbt2TcAe8VQybqGyRgD+WuPi4u43NzdTX18f1HUYGBiQk5PTD7DshGw5ZARodnb2QURExN+9vb20sLCgNJC7u/tHMNhDthxyAvC8UFZW5ldQUEBdXV1Q13H27FmytLT0WrdsXU2RAHt9FRsbm8GzMDc3x7pcnJ2dv4PyCcT02LFjMQhetadPn86C/i3kvbGRAHV2dt5JTU19yyQUvSJca+np6YV7enrW1NfXe8TExHyZn59/KTAw8BXa/XT8+PGXICUxNzdPgP455H9hEwH0ageB5x0dHbS4uAhVCpwE8vX1tb13757ezp3S/bhnzx66cuWKtpubW0RhYaE7SJ2USCSuaPcavb6AaIQqAjQ8PHw/KSlpBqXcAQ9qZGREmAW5TRAE2rt3L5mampKuru6afceOHfT48WN9W1vbP2DQGMZVEkDHQdyOTxEfUJVCS0uLeMCNe+Po0aN06NAhamxsJNlPW1ubQkNDeQacZDaxUowAjY2NPYyOjp5TPJKIB1RRUaHka/fu3YQlII4Xig/OnDlD1tbWPoo2VXVRAmg8jNzgRU9PD6pSHDx4kK5evSpVFP51dHQIm1DBIq3a2dlZoMYxBIVqqCNAuCkfxsfHL6nuqtmK+KGFVl9DRKGWAHr9k5KSkrm8vIzqu4M3LXoZQkShiQBvrvC8vDxRB+oeTE9P82PliMYWBdFIAG1f19XVoXh3VFZWcqc3/CcmmghoI9gEnTt3Tqy/qJ1TvOTk5Co06ISIQpHAV4h2YTY2NjmI+6U3btyQICUbQoQLPXXqlKgDsQeRkZHLuNh+FnsuszMB7cOHDz9HGH2DXCAI8d0OyYlFVFTUySdPnuxTNThvSsSJTde2zCki4VJAQADHAP7GkJlVlgJCqH9GRsZNXCS0a9cueaOlpSUaHx+noaEhGhwcpP7+fuKY0NLSQtXV1dTU1ES1tbU0OTkp7yOrIFj1zs/Px8h0daWA9XU7ceKEvA0SE+JBqqqq+ARwuka8CXnA7u5uGhkZIZ4BiUSylknzpcXrLXeACsLwx3gxP1Q1QoAzXXbGcR/XLHGdB5mYmCAsw/z169cTcbEEgugvrq6uvwcHBxd4e3un+/n5edy9e7eeZ4lFcSQzMzPy8vL6FbZ9ELUQiouLE/hteap5OjkzTkhIWMSShIPAEeQHrvDwEPIAS/BjaWmpTUNDgyP0lzU1NY5paWlveXmgKyEkJMTA0NAwWMmoQhEQLO77+Pjc9Pf3zwkKCvoLX0O/ITf8DFexL9oPQtShDafkT54BhG2ldvji4vvBXMmoQuFTwN9kL/A2l8rLy22xB0LRTjkphEEM2BvpnE23trauZdQzMzOEk0T29vYtJSUlIWL9ZHYmIKu/bxmPLCk8LCysHfulwsTE5On58+dtsrKyzOCwDqIW/wEAAP///mZ5OwAAAAZJREFUAwCHViakvLhTOwAAAABJRU5ErkJggg==") 3 0, auto !important;
+    font-family: var(--font-mono, monospace);
+    font-size: var(--text-xs);
+    line-height: var(--leading-relaxed);
+    letter-spacing: var(--tracking-tight);
+    visibility: visible;
+    margin: 0;
+    box-sizing: inherit;
+    padding: 0;
+}
+
+.dropdownFooter {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

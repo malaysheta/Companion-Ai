@@ -1,0 +1,160 @@
+.func-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.func-modal {
+    background: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 440px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.func-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.func-modal-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.func-close-btn {
+    background: transparent !important;
+    border: none;
+    color: #8e8ea0;
+    cursor: pointer;
+    padding: 4px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    border-radius: 50% !important;
+}
+
+.func-close-btn:hover {
+    color: #ffffff;
+}
+
+.func-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.func-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.func-input-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ececf1;
+}
+
+.func-input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none !important;
+    border-radius: 24px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    padding: 14px 18px !important;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none !important;
+    transition: background 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.func-input:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.func-input::placeholder {
+    color: #8e8ea0;
+}
+
+select.func-input {
+    appearance: none;
+    cursor: pointer;
+}
+
+select.func-input option {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.func-dropzone {
+    border: 1.5px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #ececf1;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.func-dropzone:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.func-submit-btn {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    padding: 14px 24px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.1s ease;
+    margin-top: 8px;
+    font-family: inherit;
+    width: 100%;
+}
+
+.func-submit-btn:hover {
+    background: #2a2a2a !important;
+}
+
+.func-submit-btn:active {
+    transform: scale(0.98);
+}

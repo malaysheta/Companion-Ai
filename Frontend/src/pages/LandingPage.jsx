@@ -5,6 +5,8 @@ import LambdaTerminal from '../components/LambdaLanding/LambdaTerminal';
 import EdTechVideo from '../components/LambdaLanding/EdTechVideo';
 import GlowingText from '../components/LambdaLanding/GlowingText';
 import FAQ from '../components/LambdaLanding/FAQ';
+import ContactSupport from '../components/LambdaLanding/ContactSupport';
+import Footer from '../components/LambdaLanding/Footer';
 import SmoothScroll from '../utils/SmoothScroll';
 
 const LandingPage = () => {
@@ -23,6 +25,8 @@ const LandingPage = () => {
                 <GlowingText />
                 <EdTechVideo />
                 <FAQ />
+                <ContactSupport />
+                <Footer />
                 {/* Future sections (Features, Pricing, etc.) will go here */}
             </main>
         </div>

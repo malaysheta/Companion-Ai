@@ -152,7 +152,7 @@ const FAQ = () => {
             </AnimatedContent>
 
             {/* Spacer */}
-            <div className="h-24"></div>
+            {/* <div className="h-4"></div> */}
         </section>
     );
 };

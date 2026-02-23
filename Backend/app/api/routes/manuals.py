@@ -4,6 +4,7 @@ from app.core.responce import ApiError, ApiResponse
 from app.database.mongoDb import get_manual_collection
 from app.schema.manualSchema import ManualQueryRequest
 from app.services.retrieval import retrieval_service
+from app.services.nim_api import nim_api_service
 from app.utils.cloudinary_config import cloudinary
 from app.utils.oauth2 import get_current_user
 from cloudinary.uploader import destroy
@@ -152,8 +153,7 @@ async def manual_query(
 
     Uses Qdrant vector search filtered by company, product, and product code.
     """
-    # Optionally, we could validate that the requested manual exists for this user.
-    # For now, we trust the identifiers and rely on vector DB filters.
+    # Retrieve relevant chunks from vector DB
     contexts = retrieval_service.retrieve_manual_context(
         query=request.query,
         company_name=request.company_name,
@@ -162,8 +162,26 @@ async def manual_query(
         top_k=request.top_k,
     )
 
+    # Use NIM API (LLM) to refine the final answer from chunks
+    refined_answer = nim_api_service.refine_answer(
+        query=request.query,
+        contexts=contexts,
+    )
+
+    # Only expose page numbers as metadata for cross-verification
+    page_numbers = sorted(
+        {
+            ctx.get("metadata", {}).get("page_number")
+            for ctx in contexts
+            if ctx.get("metadata", {}).get("page_number") is not None
+        }
+    )
+
     return ApiResponse.success(
-        data={"results": contexts},
+        data={
+            "answer": refined_answer,
+            "pages": page_numbers,
+        },
         status_code=200,
-        message="Retrieved relevant manual chunks successfully",
+        message="Retrieved manual answer successfully",
     )

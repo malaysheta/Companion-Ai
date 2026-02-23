@@ -2,7 +2,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from typing import List, Dict, Any
 
 class ChunkingService:
-    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 500):
+    def __init__(self, chunk_size: int = 2000, chunk_overlap: int = 800):
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,

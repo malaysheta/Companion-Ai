@@ -20,12 +20,20 @@ class EmbeddingService:
         Includes retry logic for transient failures.
         """
         max_retries = 3
+        max_input_length = 512  # conservative character limit to respect model token cap
+
+        # Ensure no individual text exceeds the model's maximum token size (approx via chars)
+        safe_texts = [
+            text[:max_input_length] if len(text) > max_input_length else text
+            for text in texts
+        ]
+
         for attempt in range(max_retries):
             try:
                 # embeddings.embed_documents automatically handles batching to some extent, 
                 # but for very large lists we might want to manually batch. 
                 # For now, relying on LangChain's implementation.
-                return self.embeddings.embed_documents(texts)
+                return self.embeddings.embed_documents(safe_texts)
             except Exception as e:
                 print(f"Error generating embeddings (attempt {attempt+1}/{max_retries}): {str(e)}")
                 if attempt == max_retries - 1:

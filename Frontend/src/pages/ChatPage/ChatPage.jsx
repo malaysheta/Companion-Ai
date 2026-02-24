@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Scanner } from '@yudiel/react-qr-scanner';
+import { apiService } from '../../services/api';
 import {
     PanelLeft, SquarePen, Search, FileText, QrCode, Upload,
     Settings, LogOut, Plus, Mic, Headphones, ArrowUp,
     Copy, ThumbsUp, ThumbsDown, Share, RotateCcw, MoreHorizontal,
-    ChevronDown, Camera, X, CheckCircle
+    ChevronDown, Camera, X, CheckCircle, Sun, Moon, Palette, Sparkles, SunMoon
 } from 'lucide-react';
 import './ChatPage.css';
 import './ChatFuncModals.css';
@@ -28,6 +29,50 @@ const LoaderIcon = ({ size = 16 }) => (
     </svg>
 );
 
+const CustomSelect = ({ options, value, onChange, placeholder = "-- Choose --", disabled = false }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const selectedOption = options.find(opt => String(opt.value) === String(value));
+
+    return (
+        <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
+            <div
+                className={`func-input ${disabled ? 'disabled' : ''}`}
+                style={{ cursor: disabled ? 'not-allowed' : 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: disabled ? 0.7 : 1 }}
+                onClick={() => !disabled && setIsOpen(!isOpen)}
+            >
+                <span style={{ color: selectedOption ? 'inherit' : '#8e8ea0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {selectedOption ? selectedOption.label : placeholder}
+                </span>
+                <ChevronDown size={16} style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', flexShrink: 0, marginLeft: 8 }} />
+            </div>
+            {isOpen && (
+                <div className="custom-select-dropdown">
+                    <div className="custom-select-option" onClick={() => { onChange(''); setIsOpen(false); }}>
+                        {placeholder}
+                    </div>
+                    {options.map((opt, idx) => (
+                        <div key={idx} className="custom-select-option" onClick={() => { onChange(opt.value); setIsOpen(false); }}>
+                            {opt.label}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
 const ChatPage = () => {
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -39,7 +84,61 @@ const ChatPage = () => {
     const [selectedManual, setSelectedManual] = useState(null);
     const [toastMessage, setToastMessage] = useState('');
     const [activeFuncModal, setActiveFuncModal] = useState(null); // null, 'upload', 'select'
+    const [theme, setTheme] = useState('night'); // 'night', 'day', 'warm', 'plum'
     const messagesEndRef = useRef(null);
+
+    // API integration states
+    const [userData, setUserData] = useState(null);
+    const [userManuals, setUserManuals] = useState([]);
+    const [uploadCompany, setUploadCompany] = useState('');
+    const [uploadProduct, setUploadProduct] = useState('');
+    const [uploadCode, setUploadCode] = useState('');
+    const [uploadFile, setUploadFile] = useState(null);
+    const [isUploading, setIsUploading] = useState(false);
+
+    useEffect(() => {
+        // Fetch user data & manuals on mount
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        const fetchInitialData = async () => {
+            try {
+                // Decode username/email from the JWT token (format: { "sub": "email@example.com", ... })
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                const payload = JSON.parse(jsonPayload);
+                const email = payload.sub;
+                const username = email ? email.split('@')[0] : 'Guest';
+                setUserData({ email, username });
+            } catch (error) {
+                console.error("Failed to parse user data from token:", error);
+                setUserData({ username: 'Guest' });
+            }
+
+            try {
+                // Fetch both user-uploaded manuals and admin global manuals
+                const [userManualsRes, adminManualsRes] = await Promise.all([
+                    apiService.getUsersManual(),
+                    apiService.getAdminsManual()
+                ]);
+
+                const userList = Array.isArray(userManualsRes) ? userManualsRes : [];
+                const adminList = Array.isArray(adminManualsRes) ? adminManualsRes : [];
+
+                setUserManuals([...adminList, ...userList]);
+            } catch (error) {
+                console.error("Failed to fetch manuals:", error);
+            }
+        };
+
+        fetchInitialData();
+    }, [navigate]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -54,9 +153,46 @@ const ChatPage = () => {
         setTimeout(() => setToastMessage(''), 3000);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    };
+
     const handleQRScanClick = () => {
         setQrData(null);
         setQrModalState('start');
+    };
+
+    const handleUploadSubmit = async () => {
+        if (!uploadCompany || !uploadProduct || !uploadFile) {
+            showToast("Company, product and file are required");
+            return;
+        }
+        setIsUploading(true);
+        try {
+            await apiService.uploadFile(uploadCompany, uploadProduct, uploadCode || '', uploadFile);
+            showToast('Manual uploaded successfully!');
+            // Refresh manuals (combine admin + user again)
+            const [userManualsRes, adminManualsRes] = await Promise.all([
+                apiService.getUsersManual(),
+                apiService.getAdminsManual()
+            ]);
+            const userList = Array.isArray(userManualsRes) ? userManualsRes : [];
+            const adminList = Array.isArray(adminManualsRes) ? adminManualsRes : [];
+            setUserManuals([...adminList, ...userList]);
+
+            setActiveFuncModal(null);
+
+            // clear form
+            setUploadCompany('');
+            setUploadProduct('');
+            setUploadCode('');
+            setUploadFile(null);
+        } catch (error) {
+            showToast(error.message || 'Error uploading file');
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     const onScanResult = (result) => {
@@ -121,8 +257,15 @@ const ChatPage = () => {
         }
     };
 
+    const toggleTheme = () => {
+        if (theme === 'night') setTheme('day');
+        else if (theme === 'day') setTheme('warm');
+        else if (theme === 'warm') setTheme('plum');
+        else setTheme('night');
+    };
+
     return (
-        <div className="chat-page-container">
+        <div className={`chat-page-container ${theme === 'day' ? 'day-theme' : theme === 'warm' ? 'warm-theme' : theme === 'plum' ? 'plum-theme' : ''}`}>
 
             {/* Sidebar */}
             <div className={`chat-sidebar ${!sidebarOpen ? 'collapsed' : ''}`}>
@@ -160,9 +303,11 @@ const ChatPage = () => {
 
                 <div className="sidebar-footer">
                     <div className="user-profile">
-                        <div className="user-avatar" style={{ backgroundColor: '#a17ff7' }}>A</div>
+                        <div className="user-avatar" style={{ backgroundColor: '#a17ff7' }}>
+                            {userData?.username ? userData.username.charAt(0).toUpperCase() : 'U'}
+                        </div>
                         <div className="user-info">
-                            <span className="user-name">Apurv Sharma</span>
+                            <span className="user-name">{userData?.username || 'Guest'}</span>
                         </div>
                     </div>
                 </div>
@@ -186,7 +331,10 @@ const ChatPage = () => {
                         )}
                     </div>
                     <div className="chat-header-right">
-                        <button className="header-btn" onClick={() => navigate('/')}>
+                        <button className="header-btn" onClick={toggleTheme} title="Toggle Theme">
+                            {theme === 'night' ? <Sun size={16} /> : theme === 'day' ? <Palette size={16} /> : theme === 'warm' ? <SunMoon size={16} /> : <Moon size={16} />}
+                        </button>
+                        <button className="header-btn" onClick={handleLogout} title="Logout">
                             <LogOut size={16} />
                         </button>
                     </div>
@@ -196,8 +344,8 @@ const ChatPage = () => {
                 <div className="chat-content-wrapper">
                     {messages.length === 0 ? (
                         <div className="empty-state">
-                            <div className="empty-state-title">What can I help with?</div>
-                            <div style={{ color: '#8e8ea0', fontSize: '14px', marginBottom: '16px' }}>Ask questions about your manuals • 19 manuals available</div>
+                            <div className="empty-state-title">What can I help with, {userData?.username}?</div>
+                            <div style={{ color: '#8e8ea0', fontSize: '14px', marginBottom: '16px' }}>Ask questions about your manuals • {userManuals?.length || 0} manuals available</div>
                         </div>
                     ) : (
                         <div className="chat-messages">
@@ -278,7 +426,7 @@ const ChatPage = () => {
                             {qrModalState === 'start' && (
                                 <>
                                     <Camera size={48} strokeWidth={1.5} style={{ opacity: 0.5, marginBottom: 8 }} />
-                                    <div style={{ color: '#ececf1', fontSize: 14 }}>Scan a QR code containing product information</div>
+                                    <div className="qr-info-text">Scan a QR code containing product information</div>
                                     <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
                                         <button className="qr-start-btn" onClick={() => setQrModalState('scanning')}>Start Camera</button>
                                         <button className="qr-stop-btn" onClick={handleMockScan}>Mock Scan (Dev)</button>
@@ -291,7 +439,7 @@ const ChatPage = () => {
                                     <div className="qr-scanner-box">
                                         <Scanner onScan={onScanResult} onError={console.error} components={{ audio: false }} />
                                     </div>
-                                    <div style={{ color: '#ececf1', fontSize: 14 }}>Point camera at QR code</div>
+                                    <div className="qr-info-text">Point camera at QR code</div>
                                     <button className="qr-stop-btn" style={{ marginTop: 8 }} onClick={() => setQrModalState('closed')}>Stop Scanning</button>
                                 </>
                             )}
@@ -318,15 +466,21 @@ const ChatPage = () => {
                                 <div style={{ width: '100%' }}>
                                     <div className="qr-form-group">
                                         <label>Company Name</label>
-                                        <select defaultValue={qrData.company}>
-                                            <option value={qrData.company}>{qrData.company}</option>
-                                        </select>
+                                        <CustomSelect
+                                            options={[{ value: qrData.company, label: qrData.company }]}
+                                            value={qrData.company}
+                                            onChange={() => { }}
+                                            disabled={true}
+                                        />
                                     </div>
                                     <div className="qr-form-group">
                                         <label>Product Name</label>
-                                        <select defaultValue={qrData.product}>
-                                            <option value={qrData.product}>{qrData.product}</option>
-                                        </select>
+                                        <CustomSelect
+                                            options={[{ value: qrData.product, label: qrData.product }]}
+                                            value={qrData.product}
+                                            onChange={() => { }}
+                                            disabled={true}
+                                        />
                                     </div>
                                     <div className="qr-form-group">
                                         <label>Product Code (Optional)</label>
@@ -354,25 +508,23 @@ const ChatPage = () => {
                         <div className="func-modal-body">
                             <div className="func-input-group">
                                 <label>Company name</label>
-                                <input type="text" className="func-input" placeholder="Enter company name" />
+                                <input type="text" className="func-input" placeholder="Enter company name" value={uploadCompany} onChange={(e) => setUploadCompany(e.target.value)} disabled={isUploading} />
                             </div>
-                            <div className="func-dropzone">
+                            <div className="func-dropzone" onClick={() => document.getElementById('fileUpload').click()} style={{ cursor: 'pointer' }}>
                                 <Upload size={32} strokeWidth={1.5} color="#8e8ea0" />
-                                <span>Click to upload PDF</span>
+                                <span>{uploadFile ? uploadFile.name : 'Click to upload PDF'}</span>
+                                <input id="fileUpload" type="file" accept=".pdf" style={{ display: 'none' }} onChange={(e) => setUploadFile(e.target.files[0])} disabled={isUploading} />
                             </div>
                             <div className="func-input-group">
-                                <label>Product Name (Optional)</label>
-                                <input type="text" className="func-input" placeholder="Enter product name" />
+                                <label>Product Name</label>
+                                <input type="text" className="func-input" placeholder="Enter product name" value={uploadProduct} onChange={(e) => setUploadProduct(e.target.value)} disabled={isUploading} />
                             </div>
                             <div className="func-input-group">
                                 <label>Product Code (Optional)</label>
-                                <input type="text" className="func-input" placeholder="Enter product code" />
+                                <input type="text" className="func-input" placeholder="Enter product code" value={uploadCode} onChange={(e) => setUploadCode(e.target.value)} disabled={isUploading} />
                             </div>
-                            <button className="func-submit-btn" onClick={() => {
-                                showToast('Manual uploaded successfully!');
-                                setActiveFuncModal(null);
-                            }}>
-                                Upload and Process
+                            <button className="func-submit-btn" onClick={handleUploadSubmit} disabled={isUploading}>
+                                {isUploading ? 'Uploading...' : 'Upload and Process'}
                             </button>
                         </div>
                     </div>
@@ -390,30 +542,29 @@ const ChatPage = () => {
                         </div>
                         <div className="func-modal-body">
                             <div className="func-input-group">
-                                <label>Company Name</label>
-                                <select className="func-input">
-                                    <option>Select a company</option>
-                                    <option>Asus</option>
-                                    <option>GE</option>
-                                    <option>LG</option>
-                                    <option>TCL</option>
-                                </select>
-                            </div>
-                            <div className="func-input-group">
-                                <label>Product Name</label>
-                                <select className="func-input">
-                                    <option>Select a product</option>
-                                    <option>Fridge</option>
-                                    <option>TV</option>
-                                    <option>Laptop</option>
-                                </select>
-                            </div>
-                            <div className="func-input-group">
-                                <label>Product Code (Optional)</label>
-                                <input type="text" className="func-input" placeholder="Enter product code" />
+                                <label style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '13px' }}>Select a Manual</label>
+                                <CustomSelect
+                                    options={userManuals?.map((m, i) => ({ value: i, label: `${m.company_name} - ${m.product_name}` })) || []}
+                                    value={(() => {
+                                        if (!selectedManual) return '';
+                                        const idx = userManuals.findIndex(m => m.company_name === selectedManual.company && m.product_name === selectedManual.product);
+                                        return idx !== -1 ? idx : '';
+                                    })()}
+                                    onChange={(val) => {
+                                        if (val === '') {
+                                            setSelectedManual(null);
+                                        } else {
+                                            const m = userManuals[val];
+                                            if (m) setSelectedManual({ company: m.company_name, product: m.product_name, code: m.file_name });
+                                        }
+                                    }}
+                                />
                             </div>
                             <button className="func-submit-btn" onClick={() => {
-                                setSelectedManual({ company: 'Asus', product: 'Laptop', code: '123' });
+                                if (!selectedManual) {
+                                    showToast('Please select a manual first!');
+                                    return;
+                                }
                                 showToast('Manual loaded!');
                                 setActiveFuncModal(null);
                             }}>

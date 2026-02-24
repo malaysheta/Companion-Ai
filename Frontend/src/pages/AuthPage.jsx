@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { apiService } from '../services/api';
 import './AuthPageCustom.css';
 
 const AuthPage = () => {
@@ -10,26 +11,47 @@ const AuthPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         setIsLogin(location.pathname === '/login');
+        setError(null);
     }, [location.pathname]);
 
     const toggleMode = (e) => {
         e.preventDefault();
         const nextModeIsLogin = !isLogin;
         setIsLogin(nextModeIsLogin);
+        setError(null);
         navigate(nextModeIsLogin ? '/login' : '/signup', { replace: true });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (isLogin) {
-            console.log('Logging in:', { email, password });
-        } else {
-            console.log('Signing up:', { name, email, password });
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            if (isLogin) {
+                // IMPORTANT: According to FastAPI login expects username to be used.
+                // We're passing email as username here.
+                const response = await apiService.login(email, password);
+                localStorage.setItem('token', response.access_token);
+                console.log('Login successful');
+            } else {
+                await apiService.register({ username: name, email, password });
+                console.log('Signup successful, proceeding to login');
+                // Auto login after signup
+                const response = await apiService.login(email, password);
+                localStorage.setItem('token', response.access_token);
+            }
+            navigate('/chat');
+        } catch (err) {
+            setError(err.message || 'An error occurred during authentication.');
+        } finally {
+            setIsLoading(false);
         }
-        navigate('/chat');
     };
 
     return (
@@ -49,6 +71,11 @@ const AuthPage = () => {
                         </p>
 
                         <form onSubmit={handleSubmit} className="custom-auth-form">
+                            {error && (
+                                <div style={{ color: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', padding: '10px', borderRadius: '8px', fontSize: '14px', marginBottom: '16px' }}>
+                                    {error}
+                                </div>
+                            )}
                             {!isLogin && (
                                 <div>
                                     <label className="custom-label">Name</label>
@@ -58,6 +85,7 @@ const AuthPage = () => {
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         className="custom-input"
+                                        disabled={isLoading}
                                     />
                                 </div>
                             )}
@@ -70,6 +98,8 @@ const AuthPage = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="custom-input"
+                                    disabled={isLoading}
+                                    required
                                 />
                             </div>
 
@@ -81,11 +111,13 @@ const AuthPage = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="custom-input"
+                                    disabled={isLoading}
+                                    required
                                 />
                             </div>
 
-                            <button type="submit" className="custom-submit-btn">
-                                {isLogin ? 'Sign in' : 'Sign up'}
+                            <button type="submit" className="custom-submit-btn" disabled={isLoading}>
+                                {isLoading ? 'Processing...' : (isLogin ? 'Sign in' : 'Sign up')}
                             </button>
                         </form>
 

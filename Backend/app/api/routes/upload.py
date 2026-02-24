@@ -55,7 +55,7 @@ async def uploadfile(company_name: str = Form(...),
     
     image_stream=generate_qr_code(company_name=company_name,product_name=product_name,product_code=product_code)
 
-    qr=upload_qr_to_cloudinary(qr_buffer=image_stream,public_id=f"{company_name}_{product_name}")
+    qr=upload_qr_to_cloudinary(qr_buffer=image_stream,public_id=f"{company_name}_{product_name}_{product_code}")
     
     file_object = {
         "document_id": document_id, # vector db ref

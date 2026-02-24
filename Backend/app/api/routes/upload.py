@@ -53,7 +53,7 @@ async def uploadfile(company_name: str = Form(...),
     if result is None:
         raise ApiError(message="Unable to upload in claudinary",status_code=500,errors="Claudinary error")
     
-    image_stream=generate_qr_code(company_name=company_name,product_name=product_name)
+    image_stream=generate_qr_code(company_name=company_name,product_name=product_name,product_code=product_code)
 
     qr=upload_qr_to_cloudinary(qr_buffer=image_stream,public_id=f"{company_name}_{product_name}")
     

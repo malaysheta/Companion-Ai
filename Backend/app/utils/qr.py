@@ -5,11 +5,12 @@ from fastapi import HTTPException
 from cloudinary.uploader import upload
 from app.utils.cloudinary_config import cloudinary
 
-def generate_qr_code(company_name:str,product_name:str)-> io.BytesIO:
+def generate_qr_code(company_name:str,product_name:str,product_code:str)-> io.BytesIO:
     try:
         data={
             "company_name":company_name,
             "product_name":product_name,
+            "product_code":product_code,
         }
         qr=qrcode.QRCode(
             version=1,

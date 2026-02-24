@@ -47,7 +47,7 @@ async def uploadfile(company_name: str = Form(...),
 
     # Upload to Cloudinary
     # Reset file cursor or use bytes
-    result = upload(io.BytesIO(file_content), folder=f"manual/{company_name}", resource_type="raw")
+    result = upload(io.BytesIO(file_content), folder=f"manual/{company_name}", resource_type="image")
     # print(result)
 
     if result is None:

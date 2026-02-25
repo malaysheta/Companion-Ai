@@ -196,15 +196,100 @@ const ChatPage = () => {
     };
 
     const onScanResult = (result) => {
-        if (result && result.length > 0) {
-            setQrData({ company: 'asd', product: 'asd', code: 'asd' }); // Mocked to 'asd' per user screenshot format!
+        if (!result) return;
+
+        try {
+            // Unpack raw string from scanner result
+            let rawText = '';
+            if (Array.isArray(result) && result.length > 0) {
+                rawText = result[0].rawValue || result[0].text || result[0].data || result[0].value || '';
+                if (!rawText) rawText = typeof result[0] === 'object' ? JSON.stringify(result[0]) : String(result[0]);
+            } else if (typeof result === 'object') {
+                rawText = result.rawValue || result.text || result.data || result.value || '';
+                if (!rawText) rawText = JSON.stringify(result);
+            } else {
+                rawText = String(result);
+            }
+
+            // Un-escape quotes if improperly stringified
+            if (rawText.startsWith('"') && rawText.endsWith('"')) {
+                rawText = rawText.slice(1, -1);
+            }
+
+            // Unescape backslashes if present
+            rawText = rawText.replace(/\\"/g, '"');
+
+            let parsedData = null;
+            try {
+                parsedData = JSON.parse(rawText);
+            } catch (e) {
+                try {
+                    // Try to fix single quotes to double quotes for bad JSON strings
+                    const relaxedJson = rawText.replace(/'/g, '"').replace(/([a-zA-Z0-9_\-]+)\s*:/g, '"$1":');
+                    parsedData = JSON.parse(relaxedJson);
+                } catch (e2) {
+                    // Not valid JSON
+                }
+            }
+
+            if (parsedData && typeof parsedData === 'object' && !Array.isArray(parsedData)) {
+                // Normalize all keys for case-insensitive and underscore-insensitive matching
+                const norm = {};
+                for (const k of Object.keys(parsedData)) {
+                    const normalizedKey = k.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const val = parsedData[k];
+                    norm[normalizedKey] = (val !== null && val !== undefined) ? String(val) : '';
+                }
+
+                // Helper to check if a key exists in our normalized dictionary securely
+                const findVal = (keys) => {
+                    for (const k of keys) {
+                        if (norm[k] !== undefined) return norm[k];
+                    }
+                    return null; // strictly return null only if none of the keys exist
+                };
+
+                // Match anything dynamically, regardless of case or underscores!
+                const guessCompany = findVal(['company', 'companyname', 'brand', 'manufacturer', 'vendor']);
+                const guessProduct = findVal(['product', 'productname', 'name', 'itemname', 'model', 'title']);
+                const guessCode = findVal(['code', 'productcode', 'id', 'productid', 'sku', 'serial', 'itemcode']);
+
+                if (guessCompany !== null || guessProduct !== null || guessCode !== null) {
+                    setQrData({
+                        company: guessCompany || 'Unknown Company',
+                        product: guessProduct || 'Unknown Product',
+                        code: guessCode || 'N/A'
+                    });
+                } else {
+                    // It's a JSON but has totally different keys. Show all contents
+                    let combined = '';
+                    for (const [k, v] of Object.entries(parsedData)) { combined += `${k}: ${v} | `; }
+                    setQrData({
+                        company: 'Scanned Data:',
+                        product: combined.trim(),
+                        code: 'N/A'
+                    });
+                }
+            } else {
+                // It's pure string text, link, or normal text! Show it cleanly!
+                setQrData({
+                    company: 'Scanned Output:',
+                    product: rawText,
+                    code: 'N/A'
+                });
+            }
+
             setQrModalState('scanned');
             showToast('QR code scanned successfully!');
+        } catch (error) {
+            console.error('Error processing scan result:', error);
+            setQrData({ company: 'Error', product: 'Failed to process', code: String(error) });
+            setQrModalState('scanned');
         }
     };
 
     const handleMockScan = () => {
-        setQrData({ company: 'asd', product: 'asd', code: 'asd' });
+        setQrData({ company: 'Mock Company', product: 'Mock Product', code: 'MCK-001' });
         setQrModalState('scanned');
         showToast('QR code scanned successfully!');
     };
@@ -456,40 +541,10 @@ const ChatPage = () => {
                                         <div className="qr-row">Product Code: {qrData.code}</div>
                                     </div>
                                     <div className="modal-actions">
-                                        <button className="qr-start-btn" style={{ flex: 1 }} onClick={() => setQrModalState('select-pdf')}>Use This Data</button>
+                                        <button className="qr-start-btn" style={{ flex: 1 }} onClick={handleLoadManual}>Use This Data</button>
                                         <button className="qr-stop-btn" style={{ flex: 1 }} onClick={() => setQrModalState('scanning')}>Scan Again</button>
                                     </div>
                                 </>
-                            )}
-
-                            {qrModalState === 'select-pdf' && qrData && (
-                                <div style={{ width: '100%' }}>
-                                    <div className="qr-form-group">
-                                        <label>Company Name</label>
-                                        <CustomSelect
-                                            options={[{ value: qrData.company, label: qrData.company }]}
-                                            value={qrData.company}
-                                            onChange={() => { }}
-                                            disabled={true}
-                                        />
-                                    </div>
-                                    <div className="qr-form-group">
-                                        <label>Product Name</label>
-                                        <CustomSelect
-                                            options={[{ value: qrData.product, label: qrData.product }]}
-                                            value={qrData.product}
-                                            onChange={() => { }}
-                                            disabled={true}
-                                        />
-                                    </div>
-                                    <div className="qr-form-group">
-                                        <label>Product Code (Optional)</label>
-                                        <input type="text" defaultValue={qrData.code} />
-                                    </div>
-                                    <button className="qr-start-btn" style={{ width: '100%', marginTop: 16, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8 }} onClick={handleLoadManual}>
-                                        <FileText size={16} /> Load Manual
-                                    </button>
-                                </div>
                             )}
                         </div>
                     </div>

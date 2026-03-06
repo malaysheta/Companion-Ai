@@ -4,7 +4,7 @@ import './RippleGrid.css';
 
 const RippleGrid = ({
     enableRainbow = false,
-    gridColor = '#5227ff',
+    gridColor = '#5227c6',
     rippleIntensity = 0.02,
     gridSize = 5.0,
     gridThickness = 15.0,

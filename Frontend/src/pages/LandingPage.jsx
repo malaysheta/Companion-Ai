@@ -8,6 +8,7 @@ import FAQ from '../components/LambdaLanding/FAQ';
 import ContactSupport from '../components/LambdaLanding/ContactSupport';
 import Footer from '../components/LambdaLanding/Footer';
 import SmoothScroll from '../utils/SmoothScroll';
+import CurvedLoop from '../components/CurvedLoop';
 
 const LandingPage = () => {
     return (
@@ -22,10 +23,12 @@ const LandingPage = () => {
             {/* Main Content */}
             <main>
                 <Hero />
+                <CurvedLoop />
                 <GlowingText />
                 <EdTechVideo />
                 <FAQ />
                 <ContactSupport />
+                <CurvedLoop />
                 <Footer />
                 {/* Future sections (Features, Pricing, etc.) will go here */}
             </main>

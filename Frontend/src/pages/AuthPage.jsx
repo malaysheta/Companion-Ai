@@ -17,7 +17,11 @@ const AuthPage = () => {
     useEffect(() => {
         setIsLogin(location.pathname === '/login');
         setError(null);
-    }, [location.pathname]);
+
+        if (localStorage.getItem('token')) {
+            navigate('/chat', { replace: true });
+        }
+    }, [location.pathname, navigate]);
 
     const toggleMode = (e) => {
         e.preventDefault();
@@ -161,7 +165,7 @@ const AuthPage = () => {
                         <div style={{ marginBottom: '24px', position: 'relative', paddingTop: '10px', paddingBottom: '10px' }}>
                             <span style={{ fontSize: '60px', color: '#f97316', position: 'absolute', top: '-5px', left: '-20px', lineHeight: 1, fontFamily: 'serif' }}>“</span>
                             <blockquote style={{ fontSize: '22px', fontWeight: 'bold', color: '#ffffff', lineHeight: '1.5', position: 'relative', zIndex: 10, marginLeft: '20px' }}>
-                                Companion AI has been a <span style={{ backgroundColor: '#f97316', color: 'white', padding: '2px 8px', borderRadius: '4px', transform: 'rotate(-1deg)', display: 'inline-block', boxShadow: '0 2px 5px rgba(249, 115, 22, 0.2)' }}>total lifesaver</span> for me. I’m great at building ideas, but figuring things out from long manuals or technical guides has never been my strength. With Companion AI, I get clear help instantly, without the stress or confusion. It saves me time, removes frustration, and makes solving problems feel effortless.
+                                Companion AI has been a <span style={{ backgroundColor: '#f97316', color: 'white', padding: '2px 8px', borderRadius: '4px', transform: 'rotate(-1deg)', display: 'inline-block', boxShadow: '0 2px 5px rgba(249, 115, 22, 0.2)' }}>total lifesaver</span> for me. Figuring things out from long manuals or technical guides has never been my strength. With Companion AI, I get clear help instantly, without the stress or confusion. It saves me time, removes frustration, and makes solving problems feel effortless.
                             </blockquote>
                             <span style={{ fontSize: '60px', color: '#f97316', position: 'absolute', bottom: '-15px', right: '-10px', lineHeight: 1, fontFamily: 'serif' }}>”</span>
                         </div>

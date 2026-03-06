@@ -4,12 +4,11 @@ import Lenis from 'lenis';
 const SmoothScroll = () => {
     useEffect(() => {
         const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            lerp: 0.06, // Physics-based buttery smoothing (lower is smoother but more fluid/inertial)
+            wheelMultiplier: 1.2, // Slightly more responsive wheel action
             direction: 'vertical',
             gestureDirection: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1,
+            smoothWheel: true, // Use smoothWheel instead of deprecated smooth
             smoothTouch: false,
             touchMultiplier: 2,
         });
@@ -23,8 +22,18 @@ const SmoothScroll = () => {
 
         rafId = requestAnimationFrame(raf);
 
+        // Force Lenis to recalculate height constraints whenever the loader removes "h-screen overflow-hidden" and the view size pops out
+        const resizeObserver = new ResizeObserver(() => {
+            lenis.resize();
+        });
+
+        resizeObserver.observe(document.body);
+        const rootEl = document.getElementById('root');
+        if (rootEl) resizeObserver.observe(rootEl);
+
         return () => {
             cancelAnimationFrame(rafId);
+            resizeObserver.disconnect();
             lenis.destroy();
         };
     }, []);

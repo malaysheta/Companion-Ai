@@ -168,7 +168,7 @@ const LambdaTerminal = () => {
                     ))}
                 </div>
             </div>
-            <style jsx>{`
+            <style>{`
                 .terminal-scroll {
                     scrollbar-width: none; /* Firefox */
                     -ms-overflow-style: none; /* IE and Edge */

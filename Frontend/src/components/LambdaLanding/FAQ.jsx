@@ -88,7 +88,7 @@ const FAQ = () => {
     };
 
     return (
-        <section className="relative w-full bg-black py-24 px-8 md:px-16 lg:px-24">
+        <section className="relative w-full bg-black pt-24 px-8 md:px-16 lg:px-24">
             {/* Pixel Snow Background */}
             <div className="absolute inset-0 pointer-events-none opacity-40">
                 <PixelSnow
@@ -103,7 +103,7 @@ const FAQ = () => {
 
             {/* Centered Header */}
             <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-                <div className="w-full flex flex-col items-center mb-40">
+                <div className="w-full flex flex-col items-center">
                     <div className="w-full text-center">
                         <h2 className="text-6xl md:text-8xl font-sans font-bold text-lambda-beige mb-8 tracking-tighter leading-[0.9]">
                             <span style={{ color: '#a17ff7' }}><ProximityText>F</ProximityText></span>

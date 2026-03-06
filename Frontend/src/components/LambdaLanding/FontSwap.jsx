@@ -4,6 +4,7 @@ const FontSwap = ({ children, className = "", delay = 0, loopDuration = 6000, pi
     const [isPixel, setIsPixel] = useState(false);
 
     useEffect(() => {
+        let interval;
         const startTimeout = setTimeout(() => {
             const triggerGlitch = () => {
                 setIsPixel(true);
@@ -13,12 +14,13 @@ const FontSwap = ({ children, className = "", delay = 0, loopDuration = 6000, pi
             };
 
             triggerGlitch();
-            const interval = setInterval(triggerGlitch, loopDuration);
-
-            return () => clearInterval(interval);
+            interval = setInterval(triggerGlitch, loopDuration);
         }, delay);
 
-        return () => clearTimeout(startTimeout);
+        return () => {
+            clearTimeout(startTimeout);
+            if (interval) clearInterval(interval);
+        };
     }, [delay, loopDuration, pixelDuration]);
 
     return (

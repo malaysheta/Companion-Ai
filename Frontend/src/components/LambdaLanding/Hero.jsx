@@ -1,11 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { startTransition } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PixelBlast from './PixelBlast';
 import FontSwap from './FontSwap';
 
 
 
 const Hero = () => {
+    const navigate = useNavigate();
+
+    const handleNavigate = (path) => {
+        startTransition(() => {
+            navigate(path);
+        });
+    };
+
     return (
         <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black text-white pt-20">
             {/* Background Animation Container */}
@@ -51,15 +59,17 @@ const Hero = () => {
                 <div className="h-24 md:h-32 w-full"></div>
 
                 <div className="flex flex-col sm:flex-row gap-4 items-center pointer-events-auto">
-                    <Link to="/login">
-                        <button
-                            style={{ backgroundColor: '#7c5cd6', color: '#ffffff' }}
-                            className="px-8 py-4 font-mono text-sm uppercase font-bold hover:bg-[#b89ff9] transition-colors"
-                        >
-                            Enter the Experience
-                        </button>
-                    </Link>
-                    <button className="px-8 py-4 border border-[#6236f4] text-[#a17ff7] bg-[#6236f4] bg-opacity-20 font-mono text-sm uppercase font-bold hover:!border-transparent hover:bg-opacity-30 transition-all">
+                    <button
+                        onClick={() => handleNavigate(localStorage.getItem('token') ? '/chat' : '/login')}
+                        style={{ backgroundColor: '#7c5cd6', color: '#ffffff' }}
+                        className="px-8 py-4 font-mono text-sm uppercase font-bold hover:bg-[#b89ff9] transition-colors"
+                    >
+                        {localStorage.getItem('token') ? 'Go to Chat' : 'Enter the Experience'}
+                    </button>
+                    <button
+                        onClick={() => handleNavigate('/team')}
+                        className="px-8 py-4 border border-[#6236f4] text-[#a17ff7] bg-[#6236f4] bg-opacity-20 font-mono text-sm uppercase font-bold hover:!border-transparent hover:bg-opacity-30 transition-all"
+                    >
                         Talk to our team
                     </button>
                 </div>

@@ -1,5 +1,7 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
 
 /* -------------------------------------------------------------------------- */
 /*                                    FONTS                                   */
@@ -79,7 +81,6 @@
     line-gap-override: 0%;
     src: url(https://21998649.fs1.hubspotusercontent-na1.net/hubfs/21998649/web-static/fonts/apkarchivr21_regular-webfont.woff) format("woff")
 }
-
 
 *,
 *:before,
@@ -300,7 +301,6 @@ body::-webkit-scrollbar,
 html::-webkit-scrollbar {
     display: none;
 }
-
 
 html *,
 html *:before,
@@ -5930,4 +5930,21 @@ table th {
 
 [data-variant="pixel"]:hover {
     text-shadow: var(--text-shadow-rgb);
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+@theme inline {
+    --animate-line-shadow: line-shadow 15s linear infinite;
+  @keyframes line-shadow {
+  0% {
+    background-position: 0 0;
+        }
+  100% {
+    background-position: 100% -100%;
+        }
+    }
 }

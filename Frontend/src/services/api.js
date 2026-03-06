@@ -1,8 +1,14 @@
 const BASE_URL = '/api';
 
 // Helper for handling fetch responses
-const handleResponse = async (response) => {
+const handleResponse = async (response, endpoint = '') => {
     if (!response.ok) {
+        if (response.status === 401 && endpoint !== '/login' && endpoint !== '/create_user') {
+            localStorage.removeItem('token');
+            if (window.location.pathname !== '/login' && window.location.pathname !== '/') {
+                window.dispatchEvent(new Event('auth:unauthorized'));
+            }
+        }
         let errorData = {};
         try {
             errorData = await response.json();
@@ -62,7 +68,7 @@ const apiClient = async (endpoint, options = {}) => {
 
     try {
         const response = await fetch(url, config);
-        return await handleResponse(response);
+        return await handleResponse(response, endpoint);
     } catch (error) {
         console.error(`API Error on ${endpoint}:`, error);
         throw error;

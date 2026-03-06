@@ -560,16 +560,22 @@ const PixelBlast = ({
         }
         prevConfigRef.current = cfg;
         return () => {
-            if (threeRef.current && mustReinit) return;
             if (!threeRef.current) return;
             const t = threeRef.current;
             t.resizeObserver?.disconnect();
             cancelAnimationFrame(t.raf);
-            t.quad?.geometry.dispose();
-            t.material.dispose();
-            t.composer?.dispose();
-            t.renderer.dispose();
-            if (t.renderer.domElement.parentElement === container) container.removeChild(t.renderer.domElement);
+
+            // Defer heavy GPU cleanup to background so it doesn't freeze the router's page transition navigation clicks
+            setTimeout(() => {
+                t.quad?.geometry.dispose();
+                t.material.dispose();
+                t.composer?.dispose();
+                t.renderer.dispose();
+                if (container && t.renderer.domElement.parentElement === container) {
+                    container.removeChild(t.renderer.domElement);
+                }
+            }, 100);
+
             threeRef.current = null;
         };
     }, [

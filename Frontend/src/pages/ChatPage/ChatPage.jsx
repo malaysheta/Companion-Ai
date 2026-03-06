@@ -6,8 +6,9 @@ import {
     PanelLeft, SquarePen, Search, FileText, QrCode, Upload,
     Settings, LogOut, Plus, Mic, Headphones, ArrowUp,
     Copy, ThumbsUp, ThumbsDown, Share, RotateCcw, MoreHorizontal,
-    ChevronDown, Camera, X, CheckCircle, Sun, Moon, Palette, Sparkles, SunMoon
+    ChevronDown, Camera, X, CheckCircle, Sun, Moon, Palette, Sparkles, SunMoon, Home
 } from 'lucide-react';
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import './ChatPage.css';
 import './ChatFuncModals.css';
 
@@ -297,7 +298,7 @@ const ChatPage = () => {
     const handleLoadManual = () => {
         setSelectedManual(qrData);
         setQrModalState('closed');
-        showToast(`QR scanned: ${qrData.company} - ${qrData.product}. Select PDF dialog opened.`);
+        showToast(`QR scanned: ${qrData.company} - ${qrData.product}.`);
     };
 
     const sendMessage = (textToSend) => {
@@ -416,8 +417,14 @@ const ChatPage = () => {
                         )}
                     </div>
                     <div className="chat-header-right">
-                        <button className="header-btn" onClick={toggleTheme} title="Toggle Theme">
-                            {theme === 'night' ? <Sun size={16} /> : theme === 'day' ? <Palette size={16} /> : theme === 'warm' ? <SunMoon size={16} /> : <Moon size={16} />}
+                        <AnimatedThemeToggler
+                            className="header-btn"
+                            onClick={toggleTheme}
+                            title="Toggle Theme"
+                            icon={theme === 'night' ? <Sun size={16} /> : theme === 'day' ? <Palette size={16} /> : theme === 'warm' ? <SunMoon size={16} /> : <Moon size={16} />}
+                        />
+                        <button className="header-btn" onClick={() => navigate('/')} title="Home">
+                            <Home size={16} />
                         </button>
                         <button className="header-btn" onClick={handleLogout} title="Logout">
                             <LogOut size={16} />

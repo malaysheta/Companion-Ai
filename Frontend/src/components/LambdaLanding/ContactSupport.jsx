@@ -9,7 +9,7 @@ const ContactSupport = () => {
             <RippleGrid />
             <div className="relative z-10 w-full max-w-2xl flex flex-col items-center text-center mt-4">
                 <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-                    <div className="text-4xl md:text-2xl font-sans font-bold tracking-tight text-white mb-4 drop-shadow-md pb-4">
+                    <div className="text-4xl md:text-2xl font-sans font-bold tracking-tight text-white-900 mb-4 drop-shadow-md pb-4">
                         Still have questions?
                     </div>
                 </FadeContent>

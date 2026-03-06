@@ -161,7 +161,12 @@ async def manual_query(
         product_code=request.product_code,
         top_k=request.top_k,
     )
-
+    if not contexts:
+        return ApiResponse.success(
+            data={"answer": "No relevant context found.", "pages": []},
+            status_code=200,
+            message="No matching chunks found for the given query and filters.",
+        )
     # Use NIM API (LLM) to refine the final answer from chunks
     refined_answer = nim_api_service.refine_answer(
         query=request.query,

@@ -5,6 +5,7 @@ from typing import List, Dict, Any
 from app.core.responce import ApiError
 import uuid
 
+
 class VectorDBService:
     def __init__(self):
         self.client = QdrantClient(
@@ -17,30 +18,23 @@ class VectorDBService:
         self._ensure_payload_indexes()
 
     def _ensure_collection_exists(self):
-        """
-        Checks if the collection exists, creating it if not.
-        """
         try:
             collections = self.client.get_collections()
             collection_names = [c.name for c in collections.collections]
-            
+
             if self.collection_name not in collection_names:
                 self.client.create_collection(
                     collection_name=self.collection_name,
                     vectors_config=models.VectorParams(
-                        size=1024, # NVIDIA nv-embedqa-e5-v5 dimension is 1024
-                        distance=models.Distance.COSINE
-                    )
+                        size=1024,
+                        distance=models.Distance.COSINE,
+                    ),
                 )
                 print(f"Collection '{self.collection_name}' created.")
         except Exception as e:
-             # Log warning but don't crash init, might allow read-only or deferred creation
-             print(f"Warning: Could not check/create collection: {e}")
+            print(f"Warning: Could not check/create collection: {e}")
 
     def _ensure_payload_indexes(self):
-        """
-        Ensures payload indexes exist for fields used in filters.
-        """
         try:
             index_fields = ["company_name", "product_name", "product_code"]
             for field in index_fields:
@@ -52,7 +46,6 @@ class VectorDBService:
                     )
                     print(f"Created payload index for field '{field}'.")
                 except Exception as e:
-                    # Ignore errors like 'index already exists'
                     print(f"Warning: Could not create payload index for '{field}': {e}")
         except Exception as e:
             print(f"Warning: Failed to ensure payload indexes: {e}")
@@ -64,9 +57,6 @@ class VectorDBService:
         ids: List[str] = None,
         batch_size: int = 64,
     ):
-        """
-        Upserts vectors into Qdrant in batches to avoid timeouts.
-        """
         try:
             if not ids:
                 ids = [str(uuid.uuid4()) for _ in range(len(vectors))]
@@ -96,10 +86,7 @@ class VectorDBService:
                     collection_name=self.collection_name,
                     points=batch_points,
                 )
-                print(
-                    f"Upserted batch {start}-{end} "
-                    f"({len(batch_points)} points) to '{self.collection_name}'."
-                )
+                print(f"Upserted batch {start}-{end} ({len(batch_points)} points).")
 
             print(f"Upserted {total_points} points to '{self.collection_name}'.")
 
@@ -116,39 +103,37 @@ class VectorDBService:
         filters: Dict[str, Any] | None = None,
         limit: int = 5,
     ):
-        """
-        Searches vectors in Qdrant using a query vector and optional metadata filters.
-        """
         try:
             qdrant_filter = None
             if filters:
-                must_conditions = []
-                for key, value in filters.items():
-                    if value is None:
-                        continue
-                    must_conditions.append(
-                        models.FieldCondition(
-                            key=key,
-                            match=models.MatchValue(value=value),
-                        )
+                must_conditions = [
+                    models.FieldCondition(
+                        key=key,
+                        match=models.MatchValue(value=value),
                     )
-
+                    for key, value in filters.items()
+                    if value is not None
+                ]
                 if must_conditions:
                     qdrant_filter = models.Filter(must=must_conditions)
 
-            results = self.client.search(
+            # ✅ Fixed: use query_points instead of deprecated search()
+            results = self.client.query_points(
                 collection_name=self.collection_name,
-                query_vector=query_vector,
+                query=query_vector,
                 query_filter=qdrant_filter,
                 limit=limit,
                 with_payload=True,
-            )
+            ).points
+
             return results
+
         except Exception as e:
             raise ApiError(
                 message=f"Failed to search vectors: {str(e)}",
                 status_code=500,
                 errors="Vector DB Error",
             )
+
 
 vector_db_service = VectorDBService()

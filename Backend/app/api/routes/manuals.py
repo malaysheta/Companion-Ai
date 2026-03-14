@@ -176,7 +176,7 @@ async def manual_query(
     # Only expose page numbers as metadata for cross-verification
     page_numbers = sorted(
         {
-            ctx.get("metadata", {}).get("page_number")
+            str(ctx.get("metadata", {}).get("page_number"))
             for ctx in contexts
             if ctx.get("metadata", {}).get("page_number") is not None
         }

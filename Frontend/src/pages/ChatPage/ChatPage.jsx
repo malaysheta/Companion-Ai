@@ -301,18 +301,35 @@ const ChatPage = () => {
         showToast(`QR scanned: ${qrData.company} - ${qrData.product}.`);
     };
 
-    const sendMessage = (textToSend) => {
+    const sendMessage = async (textToSend) => {
         if (!textToSend.trim() || status === 'streaming') return;
+
+        if (!selectedManual) {
+            showToast("Please select or scan a manual first to ask questions.");
+            return;
+        }
 
         setMessages(prev => [...prev, { role: 'user', text: textToSend }]);
         setInputVal('');
         setStatus('streaming');
 
-        setTimeout(() => {
-            const tempBotMsg = { role: 'bot', text: "" };
-            setMessages(prev => [...prev, tempBotMsg]);
+        try {
+            // Add initial empty bot message
+            setMessages(prev => [...prev, { role: 'bot', text: "" }]);
 
-            const fullResponse = "Heyy Appu 😊\nLook who showed up. What's going on in that chaotic genius brain today?\n\nDid you come to rant about code, design your Companion AI empire, or just vibe for a bit? Because I'm here for all three. Spill. ☕✨";
+            // Query backend
+            const response = await apiService.manualQuery(
+                selectedManual.company,
+                selectedManual.product,
+                selectedManual.code || '',
+                textToSend
+            );
+
+            let fullResponse = response.answer || "I'm sorry, I couldn't find an answer to that in the manual.";
+            if (response.pages && response.pages.length > 0) {
+                fullResponse += `\n\n(Sources: Page ${response.pages.join(', ')})`;
+            }
+
             const words = fullResponse.split(" ");
             let currentText = "";
 
@@ -324,14 +341,23 @@ const ChatPage = () => {
                         newMsgs[newMsgs.length - 1] = { role: 'bot', text: currentText };
                         return newMsgs;
                     });
-                    setTimeout(() => streamWord(index + 1), Math.random() * 50 + 30);
+                    setTimeout(() => streamWord(index + 1), Math.random() * 30 + 10);
                 } else {
                     setStatus('ready');
                 }
             };
 
             streamWord(0);
-        }, 600);
+
+        } catch (error) {
+            console.error("Error querying manual:", error);
+            setMessages(prev => {
+                const newMsgs = [...prev];
+                newMsgs[newMsgs.length - 1] = { role: 'bot', text: "Sorry, there was an error processing your request. Please try again." };
+                return newMsgs;
+            });
+            setStatus('ready');
+        }
     };
 
     const handleSend = () => sendMessage(inputVal);

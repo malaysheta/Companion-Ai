@@ -137,6 +137,19 @@ export const apiService = {
         });
     },
 
+    manualQuery: (companyName, productName, productCode, query, topK = 5) => {
+        return apiClient('/manual_query', {
+            method: 'POST',
+            body: {
+                company_name: companyName,
+                product_name: productName,
+                product_code: productCode,
+                query: query,
+                top_k: topK
+            }
+        });
+    },
+
     // Misc
     getRoot: () => {
         return apiClient('/', {

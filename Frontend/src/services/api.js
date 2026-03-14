@@ -1,4 +1,4 @@
-const BASE_URL = '/api';
+const BASE_URL = import.meta.env.DEV ? '/api' : 'https://companion-ai-6wcl.onrender.com';
 
 // Helper for handling fetch responses
 const handleResponse = async (response, endpoint = '') => {
